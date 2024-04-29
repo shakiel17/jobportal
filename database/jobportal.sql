@@ -26,9 +26,12 @@ CREATE TABLE `admin` (
   `password` varchar(100) DEFAULT NULL,
   `fullname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `admin` */
+
+insert  into `admin`(`id`,`username`,`password`,`fullname`) values 
+(1,'admin','1234','Administrator');
 
 /*Table structure for table `applicant` */
 
@@ -64,10 +67,12 @@ CREATE TABLE `employer` (
   `comp_address` text,
   `comp_email` varchar(100) DEFAULT NULL,
   `comp_contactno` varchar(100) DEFAULT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `employer` */
 

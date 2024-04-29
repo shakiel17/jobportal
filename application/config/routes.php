@@ -49,6 +49,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+//====================Company routes====================
+$route['company_authentication'] = 'pages/company_authentication';
+$route['company_main'] = 'pages/company_main';
+$route['save_company_account'] = 'pages/save_company_account';
+//====================Company routes====================
+//====================Admin routes=======================
+$route['delete_company/(:any)'] = 'pages/delete_company/$1';
+$route['save_company'] = 'pages/save_company';
+$route['manage_company'] = 'pages/manage_company';
+$route['admin_logout'] = 'pages/admin_logout';
+$route['admin_main'] = 'pages/admin_main';
+$route['admin_authentication'] = 'pages/admin_authentication';
+//====================Admin routes=======================
+$route['company'] = 'pages/company';
+$route['admin'] = 'pages/admin';
 $route['default_controller'] = 'pages/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

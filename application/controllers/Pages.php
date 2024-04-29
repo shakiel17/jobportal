@@ -7,11 +7,165 @@
             $page = "index";
             if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
                 show_404();
+            }            
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page);  
+            $this->load->view('templates/user/modal');          
+            $this->load->view('templates/user/footer');
+        }
+                
+        //======================Admin Module==========================
+        public function admin(){
+            $page = "index";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                redirect(base_url()."admin_main");
             }
-            if($this->session->user_login){
-                redirect(base_url()."user_main");
+            $this->load->view('pages/admin/'.$page);
+        }
+        public function admin_authentication(){
+            $data=$this->Job_model->admin_authentication();
+            if($data){
+                $user_data=array(
+                    'username' => $data['username'],
+                    'fullname' => $data['fullname'],
+                    'admin_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."admin_main");
+            }else{
+                $this->session->set_flashdata('error','Invalid password!');
+                redirect(base_url()."admin");
             }
-            $this->load->view('pages/'.$page);            
-        }        
+        }
+        public function admin_main(){
+            $page = "main";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."admin");
+            }
+            $data['company']=$this->Job_model->getAllCompany();
+            $data['applicant']=$this->Job_model->getAllApplicant();
+            $data['jobs']=$this->Job_model->getAllJobs();
+            $data['users']=$this->Job_model->getAllUsers();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+        public function admin_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('admin_login');
+            redirect(base_url()."admin");
+        }
+        public function manage_company(){
+            $page = "manage_company";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."admin");
+            }
+            $data['title']="Company Manager";
+            $data['company']=$this->Job_model->getAllCompany();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+        public function save_company(){
+            $save=$this->Job_model->save_company();
+            if($save){
+                $this->session->set_flashdata('success','Company details successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save company details!');
+            }
+            redirect(base_url()."manage_company");
+        }
+        public function delete_company($id){
+            $save=$this->Job_model->delete_company($id);
+            if($save){
+                $this->session->set_flashdata('success','Company details successfully deleted!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to delete company details!');
+            }
+            redirect(base_url()."manage_company");
+        }
+        //======================Admin Module==========================
+
+        //=====================Company Module=========================
+        public function company(){
+            $page = "index";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                redirect(base_url()."company_main");
+            }
+            $this->load->view('pages/company/'.$page);
+        }
+        public function company_authentication(){
+            $data=$this->Job_model->company_authentication();
+            if($data){
+                $user_data=array(
+                    'username' => $data['username'],
+                    'fullname' => $data['comp_name'],
+                    'company_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."company_main");
+            }else{
+                $this->session->set_flashdata('error','Invalid password!');
+                redirect(base_url()."company");
+            }
+        }
+        public function save_company_account(){
+            $save=$this->Job_model->save_company_account();
+            if($save){
+
+            }else{
+                
+            }
+        }
+        public function company_main(){
+            $page = "main";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
+            $data['company']=$this->Job_model->getAllCompany();
+            $data['applicant']=$this->Job_model->getAllApplicant();
+            $data['jobs']=$this->Job_model->getAllJobs();
+            $data['users']=$this->Job_model->getAllUsers();
+            $this->load->view('templates/header');
+            $this->load->view('templates/company/navbar');
+            $this->load->view('templates/company/sidebar');
+            $this->load->view('pages/company/'.$page,$data);
+            $this->load->view('templates/company/modal');
+            $this->load->view('templates/company/footer');
+        }
+        //=====================Company Module=========================
     }
 ?>
