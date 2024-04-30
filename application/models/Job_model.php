@@ -145,5 +145,34 @@
                 return false;
             }
         }
+        public function user_authentication(){            
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username' AND app_password='$password'");
+            if($result->num_rows()>0){
+                return $result->row_array();
+            }else{
+                return false;
+            }
+        }
+        public function user_registration(){
+            $lastname=$this->input->post('lastname');
+            $firstname=$this->input->post('firstname');
+            $middlename=$this->input->post('middlename');
+            $contactno=$this->input->post('contactno');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $code=date('YmdHis');
+            $check=$this->db->query("SELECT * FROM applicant WHERE app_username='$username'");
+            if($check->num_rows()>0){
+                return false;
+            }else{
+                $result=$this->db->query("INSERT INTO applicant(app_code,app_lastname,app_firstname,app_middlename,app_contactno,app_username,app_password) VALUES('$code','$lastname','$firstname','$middlename','$contactno','$username','$password')");
+            }
+            if($result){
+                $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username' AND app_password='$password'");
+                return $result->row_array();
+            }
+        }
     }
 ?>

@@ -2,11 +2,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <h2 class="text-center display-4">Enhanced Search</h2>
-            <form action="enhanced-results.html">
+            <h2 class="text-center display-4">Find REAL, ONLINE Job.</h2>            
+            <?=form_open(base_url()."search_jobs");?>                
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Result Type:</label>
@@ -35,20 +35,25 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="Lorem ipsum">
+                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-lg btn-default">
                                         <i class="fa fa-search"></i>
                                     </button>
-                                </div>
+                                </div>                                
                             </div>
+                            <br>
+                            <center>
+                                <a href="<?=base_url();?>view_all_jobs" style="color:black;text-decoration:underline;">Browse all Jobs</a>
+                            </center>
+                            
                         </div>
                     </div>
                 </div>
-            </form>
+            <?=form_close();?>
         </div>
     </section>
   </div>

@@ -228,5 +228,58 @@
             redirect(base_url()."manage_job");
         }
         //=====================Company Module=========================
+
+        //=====================User Module============================
+        public function user_signin(){
+            $page = "user_login";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }            
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page);  
+            $this->load->view('templates/user/modal');          
+            $this->load->view('templates/user/footer');
+        }
+        public function user_authentication(){
+            $data=$this->Job_model->user_authentication();            
+            if($data){
+                $fullname=$data['app_firstname']." ".$data['app_lastname'];
+                $user_data=array(
+                    'username' => $data['app_username'],
+                    'fullname' => $fullname,
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url());
+            }else{
+                $this->session->set_flashdata('error','Invalid password!');
+                redirect(base_url()."user_signin");
+            }
+        }
+        public function user_registration(){
+            $data=$this->Job_model->user_registration();            
+            if($data){
+                $fullname=$data['app_firstname']." ".$data['app_lastname'];
+                $user_data=array(
+                    'username' => $data['app_username'],
+                    'fullname' => $fullname,
+                    'user_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url());
+            }else{
+                $this->session->set_flashdata('error_save','Unable to save details!');
+                redirect(base_url()."user_signin");
+            }
+        }
+        public function user_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('user_login');
+            redirect(base_url());
+        }
+        //=====================User Module============================
     }
 ?>
