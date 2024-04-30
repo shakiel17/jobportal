@@ -23,7 +23,7 @@
               <div class="inner">
                 <h3><?=count($company);?></h3>
 
-                <p>Employer</p>
+                <p>All Job Offering</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -38,7 +38,7 @@
               <div class="inner">
                 <h3><?=count($jobs);?></h3>
 
-                <p>Job Offering</p>
+                <p>Posted Job Offering</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>

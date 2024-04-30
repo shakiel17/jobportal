@@ -23,6 +23,13 @@
     <div class="card-header text-center">
       <a href="<?=base_url();?>company" class="h1"><b>Employer Portal</b></a>
     </div>
+    <?php
+  if($this->session->error){
+  ?>
+  <div class="alert alert-danger"><?=$this->session->error;?></div>
+  <?php
+  }
+  ?>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
@@ -85,7 +92,9 @@
                     <?php
                     $company=$this->Job_model->getAllCompany();
                     foreach($company as $item){
+                      if($item['username']==""){
                         echo "<option value='$item[id]'>$item[comp_name]</option>";
+                      }
                     }
                     ?>
                 </select>
@@ -93,6 +102,10 @@
               <div class="form-group">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email">
+              </div>
+              <div class="form-group">
+                <label>Contact No.</label>
+                <input type="text" class="form-control" name="contactno">
               </div>
               <div class="form-group">
                 <label>Username</label>

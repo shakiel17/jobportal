@@ -50,6 +50,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //====================Company routes====================
+$route['delete_job/(:any)'] = 'pages/delete_job/$1';
+$route['change_job_status/(:any)/(:any)'] = 'pages/change_job_status/$1/$2';
+$route['save_job'] = 'pages/save_job';
+$route['manage_job'] = 'pages/manage_job';
+$route['company_logout'] = 'pages/company_logout';
 $route['company_authentication'] = 'pages/company_authentication';
 $route['company_main'] = 'pages/company_main';
 $route['save_company_account'] = 'pages/save_company_account';

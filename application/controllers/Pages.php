@@ -139,9 +139,16 @@
         public function save_company_account(){
             $save=$this->Job_model->save_company_account();
             if($save){
-
+                $user_data=array(
+                    'username' => $save['username'],
+                    'fullname' => $save['comp_name'],
+                    'company_login' => true
+                );
+                $this->session->set_userdata($user_data);
+                redirect(base_url()."company_main");
             }else{
-                
+                $this->session->set_flashdata('error','Username already exists!');
+                redirect(base_url()."company");
             }
         }
         public function company_main(){
@@ -155,9 +162,9 @@
                 $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
                 redirect(base_url()."company");
             }
-            $data['company']=$this->Job_model->getAllCompany();
-            $data['applicant']=$this->Job_model->getAllApplicant();
-            $data['jobs']=$this->Job_model->getAllJobs();
+            $data['company']=$this->Job_model->getAllJobsByEmployer();
+            $data['applicant']=$this->Job_model->getAllApplicantByEmployer();
+            $data['jobs']=$this->Job_model->getAllJobsByEmployerPosted();
             $data['users']=$this->Job_model->getAllUsers();
             $this->load->view('templates/header');
             $this->load->view('templates/company/navbar');
@@ -165,6 +172,60 @@
             $this->load->view('pages/company/'.$page,$data);
             $this->load->view('templates/company/modal');
             $this->load->view('templates/company/footer');
+        }
+        public function company_logout(){
+            $this->session->unset_userdata('username');
+            $this->session->unset_userdata('fullname');
+            $this->session->unset_userdata('company_login');
+            redirect(base_url()."company");
+        }
+        public function manage_job(){
+            $page = "manage_job";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
+            $data['title']="Job Offering Manager";
+            $data['jobs']=$this->Job_model->getAllJobsByEmployer();
+            $data['comp_id']=$this->Job_model->getCompanyDetails($this->session->username);
+            $this->load->view('templates/header');
+            $this->load->view('templates/company/navbar');
+            $this->load->view('templates/company/sidebar');
+            $this->load->view('pages/company/'.$page,$data);
+            $this->load->view('templates/company/modal');
+            $this->load->view('templates/company/footer');
+        }
+        public function save_job(){
+            $save=$this->Job_model->save_job();
+            if($save){
+                $this->session->set_flashdata('success','Job offering details successfully saved!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to save job offering details!');
+            }
+            redirect(base_url()."manage_job");
+        }
+        public function delete_job($id){
+            $save=$this->Job_model->delete_job($id);
+            if($save){
+                $this->session->set_flashdata('success','Job offering details successfully deleted!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to delete job offering details!');
+            }
+            redirect(base_url()."manage_job");
+        }
+        public function change_job_status($id,$status){
+            $save=$this->Job_model->change_job_status($id,$status);
+            if($save){
+                $this->session->set_flashdata("success","Job offering successfully $status!");
+            }else{
+                $this->session->set_flashdata("failed","Unable to post/unpost job offering!");
+            }
+            redirect(base_url()."manage_job");
         }
         //=====================Company Module=========================
     }
