@@ -325,6 +325,44 @@
             }
             redirect(base_url()."user_profile");
         }
+        public function search_jobs(){
+            $page = "search_jobs";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+
+            }else{
+                redirect(base_url()."user_signin");
+            }
+            $description=$this->input->post('description');
+            $data['jobs'] = $this->Job_model->fetchAllJobs($description);
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page,$data);  
+            $this->load->view('templates/user/modal',$data);          
+            $this->load->view('templates/user/footer');
+        }
+        public function view_all_jobs(){
+            $page = "search_jobs";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+
+            }else{
+                redirect(base_url()."user_signin");
+            }
+            $description=$this->input->post('description');
+            $data['jobs'] = $this->Job_model->view_all_jobs();;
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page,$data);  
+            $this->load->view('templates/user/modal',$data);          
+            $this->load->view('templates/user/footer');
+        }
         //=====================User Module============================
     }
 ?>

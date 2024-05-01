@@ -28,11 +28,6 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-/*Data for the table `admin` */
-
-insert  into `admin`(`id`,`username`,`password`,`fullname`) values 
-(1,'admin','1234','Administrator');
-
 /*Table structure for table `applicant` */
 
 DROP TABLE IF EXISTS `applicant`;
@@ -53,9 +48,7 @@ CREATE TABLE `applicant` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `applicant` */
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `employer` */
 
@@ -72,9 +65,7 @@ CREATE TABLE `employer` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
-/*Data for the table `employer` */
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `job_application` */
 
@@ -84,14 +75,14 @@ CREATE TABLE `job_application` (
   `id` int(45) NOT NULL AUTO_INCREMENT,
   `job_id` int(11) DEFAULT NULL,
   `app_code` varchar(100) DEFAULT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `coverletter` text,
   `documents` longblob,
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   `status` varchar(100) DEFAULT 'pending',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `job_application` */
 
 /*Table structure for table `jobs` */
 
@@ -107,9 +98,7 @@ CREATE TABLE `jobs` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `jobs` */
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

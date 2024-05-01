@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //====================User routes=======================
+$route['view_all_jobs'] = 'pages/view_all_jobs';
+$route['search_jobs'] = 'pages/search_jobs';
 $route['update_user_account'] = 'pages/update_user_account';
 $route['update_interest'] = 'pages/update_interest';
 $route['update_profile'] = 'pages/update_profile';

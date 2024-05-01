@@ -38,7 +38,7 @@
                         </div> -->
                         <div class="form-group">
                             <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here">
+                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" name="description">
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-lg btn-default">
                                         <i class="fa fa-search"></i>

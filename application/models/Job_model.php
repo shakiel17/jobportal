@@ -113,7 +113,7 @@
             $id=$this->input->post('job_id');
             $comp_id=$this->input->post('comp_id');
             $job_title=$this->input->post('job_title');
-            $job_description=$this->input->post('job_description');
+            $job_description=htmlspecialchars($this->input->post('job_description'));
             $job_keyword=$this->input->post('job_keyword');
             $job_status='Unposted';
             $datearray=date('Y-m-d');
@@ -217,6 +217,14 @@
         }
         public function getAllJobsByApplicant($code){
             $result=$this->db->query("SELECT j.job_title,j.job_description,e.comp_name,e.comp_address,ja.datearray,ja.timearray,ja.status FROM jobs j INNER JOIN employer e ON e.id=j.comp_id INNER JOIN job_application ja ON ja.job_id=j.id INNER JOIN applicant a ON a.app_code=ja.app_code WHERE a.app_code='$code' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC,ja.timearray DESC");
+            return $result->result_array();
+        }
+        public function fetchAllJobs($description){
+            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id WHERE j.job_keyword LIKE '%$description%' OR j.job_title LIKE '%$description%' ORDER BY j.datearray DESC");
+            return $result->result_array();
+        }
+        public function view_all_jobs(){
+            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id ORDER BY j.datearray DESC");
             return $result->result_array();
         }
     }
