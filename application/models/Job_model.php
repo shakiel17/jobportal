@@ -174,5 +174,50 @@
                 return $result->row_array();
             }
         }
+        public function getProfile($username){
+            $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username'");
+            return $result->row_array();
+        }
+        public function update_profile(){
+            $id=$this->input->post('id');
+            $lastname=$this->input->post('lastname');
+            $firstname=$this->input->post('firstname');
+            $middlename=$this->input->post('middlename');
+            $birthdate=$this->input->post('birthdate');
+            $gender=$this->input->post('gender');
+            $address=$this->input->post('address');
+            $contactno=$this->input->post('contactno');
+            $result=$this->db->query("UPDATE applicant SET app_lastname='$lastname',app_firstname='$firstname',app_middlename='$middlename',app_birthdate='$birthdate',app_gender='$gender',app_address='$address',app_contactno='$contactno' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function update_interest(){
+            $id=$this->input->post('id');
+            $interest=$this->input->post('interest');
+            $result=$this->db->query("UPDATE applicant SET app_interest='$interest' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function update_user_account(){
+            $id=$this->input->post('id');
+            $username=$this->input->post('username');
+            $password=$this->input->post('password');
+            $result=$this->db->query("UPDATE applicant SET app_username='$username',app_password='$password' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function getAllJobsByApplicant($code){
+            $result=$this->db->query("SELECT j.job_title,j.job_description,e.comp_name,e.comp_address,ja.datearray,ja.timearray,ja.status FROM jobs j INNER JOIN employer e ON e.id=j.comp_id INNER JOIN job_application ja ON ja.job_id=j.id INNER JOIN applicant a ON a.app_code=ja.app_code WHERE a.app_code='$code' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC,ja.timearray DESC");
+            return $result->result_array();
+        }
     }
 ?>

@@ -280,6 +280,51 @@
             $this->session->unset_userdata('user_login');
             redirect(base_url());
         }
+        public function user_profile(){
+            $page = "user_profile";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+
+            }else{
+                redirect(base_url()."user_signin");
+            }
+            $data['profile'] = $this->Job_model->getProfile($this->session->username);
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page,$data);  
+            $this->load->view('templates/user/modal',$data);          
+            $this->load->view('templates/user/footer');
+        }
+        public function update_profile(){
+            $save=$this->Job_model->update_profile();
+            if($save){
+                $this->session->set_flashdata('success','User Profile successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update user profile!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function update_interest(){
+            $save=$this->Job_model->update_interest();
+            if($save){
+                $this->session->set_flashdata('success','User field of interest successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update user field of interest!');
+            }
+            redirect(base_url()."user_profile");
+        }
+        public function update_user_account(){
+            $save=$this->Job_model->update_user_account();
+            if($save){
+                $this->session->set_flashdata('success','User account successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update user account!');
+            }
+            redirect(base_url()."user_profile");
+        }
         //=====================User Module============================
     }
 ?>

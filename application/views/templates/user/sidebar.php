@@ -53,15 +53,7 @@
                 Profile
               </p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?=base_url();?>user_application" class="nav-link">
-              <i class="nav-icon far fa-envelope"></i>
-              <p>
-                Job Application
-              </p>
-            </a>
-          </li>          
+          </li>                    
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
