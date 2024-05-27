@@ -116,7 +116,7 @@
             if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
                 show_404();
             }                        
-            if($this->session->admin_login){
+            if($this->session->company_login){
                 redirect(base_url()."company_main");
             }
             $this->load->view('pages/company/'.$page);
