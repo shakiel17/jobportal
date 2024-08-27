@@ -216,7 +216,7 @@
             }
         }
         public function getAllJobsByApplicant($code){
-            $result=$this->db->query("SELECT j.job_title,j.job_description,e.comp_name,e.comp_address,ja.datearray,ja.timearray,ja.status FROM jobs j INNER JOIN employer e ON e.id=j.comp_id INNER JOIN job_application ja ON ja.job_id=j.id INNER JOIN applicant a ON a.app_code=ja.app_code WHERE a.app_code='$code' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC,ja.timearray DESC");
+            $result=$this->db->query("SELECT j.job_title,j.job_description,e.comp_name,e.comp_address,ja.datearray,ja.timearray,ja.status FROM jobs j INNER JOIN employer e ON e.id=j.comp_id INNER JOIN job_application ja ON ja.job_id=j.id INNER JOIN applicant a ON a.app_username=ja.app_code WHERE a.app_username='$code' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC,ja.timearray DESC");
             return $result->result_array();
         }
         public function fetchAllJobs($description){
@@ -224,8 +224,25 @@
             return $result->result_array();
         }
         public function view_all_jobs(){
-            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id ORDER BY j.datearray DESC");
+            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id WHERE j.job_status='Posted' ORDER BY j.datearray DESC");
             return $result->result_array();
+        }
+        public function save_application(){
+            $id=$this->input->post('job_id');
+            $subject=$this->input->post('app_subject');
+            $letter=$this->input->post('app_letter');
+            $file_name=$_FILES['file']['name'];
+		    $file_tmp=$_FILES['file']['tmp_name'];
+            $pdf_blob=addslashes(file_get_contents($file_tmp));
+            $username=$this->session->username;            
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $result=$this->db->query("INSERT INTO job_application(job_id,app_code,`subject`,coverletter,documents,datearray,timearray) VALUES('$id','$username','$subject','$letter','$pdf_blob','$date','$time')");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 ?>

@@ -4,12 +4,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Search Job Result (<?=count($jobs);?>)</h1>
+            <h1>Job Application</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?=base_url();?>">Home</a></li>
-              <li class="breadcrumb-item active">Search Result</li>
+              <li class="breadcrumb-item active">Application Form</li>
             </ol>
           </div>
         </div>
@@ -18,15 +18,11 @@
 
     <!-- Main content -->
     <section class="content">
-
+    <div class="col-sm-6">
       <!-- Default box -->
-      <?php
-      if(count($jobs)>0){
-        foreach($jobs as $item){
-      ?>
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b><?=$item['job_title'];?></b></h3>
+          <h3 class="card-title"><b>Application Form</b></h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -37,37 +33,37 @@
             </button>
           </div>
         </div>
+        <?=form_open_multipart(base_url()."save_application");?>
+        <input type="hidden" name="job_id" value="<?=$id;?>">        
         <div class="card-body">
-        <p style="font-size:20px;">
-          <b>Company Details</b><br><br>
-          <?=$item['comp_name'];?><br>
-          <?=$item['comp_address'];?><br>
-          <?=$item['comp_email'];?><br>
-          <?=$item['comp_contactno'];?><br>
-        </p>
-          <br>
-          <b>Description:</b><br>
-          <p style="font-size:20px;"><pre><?=$item['job_description'];?></pre></p><br>
-          <a href="<?=base_url();?>apply_job/<?=$item['id'];?>" class="btn btn-info">Apply Now</a>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Date/Time Posted: <b><?=date('M d, Y',strtotime($item['datearray']));?> | <?=date('h:i A',strtotime($item['timearray']));?></b>
-        </div>
-        <!-- /.card-footer-->
-      </div>      
-      <!-- /.card -->
-      <?php
-        }
-      }else{
-        echo "<center>No Job found!</center>";
-        ?>
-        <center>
-            <a href="<?=base_url();?>" style="color:black;text-decoration:underline;">Go Back</a>
-        </center>
         <?php
-      }
-      ?>
+            $check=$this->Job_model->db->query("SELECT * FROM job_application WHERE job_id='$id' AND app_code='".$this->session->username."' AND `status`='pending'");
+            if($check->num_rows() > 0){
+                echo "<b>You already applied for this Job!</b>";
+            }else{
+        ?>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" name="app_subject" class="form-control" placeholder="e.g. Application for IT Staff" required>
+            </div>
+            <div class="form-group">
+                <label>Cover Letter</label>
+                <textarea name="app_letter" class="form-control" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Resume</label>
+                <input type="file" name="file" class="form-control" accept="application/pdf" required>
+            </div>
+            <div class="form-group">            
+                <button type="submit" name="submit" class="btn btn-primary">Submit Application</button>
+            </div>
+            <?php
+            }
+            ?>
+        </div>        
+        <?=form_close();?>
+      </div>      
+      <!-- /.card -->     
       <!-- <div class="row">
           <div class="col-12">
             <div class="card">
@@ -154,6 +150,7 @@
             </div>
           </div>
         </div> -->
+</div>
     </section>
     <!-- /.content -->
     

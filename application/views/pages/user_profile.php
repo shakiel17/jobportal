@@ -43,7 +43,7 @@
 
                 <ul class="list-group list-group-unbordered mb-3">
                     <?php
-                        $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_code']);
+                        $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
                     ?>
                   <li class="list-group-item">
                     <b>Applied Job</b> <a class="float-right"><?=count($jobs);?></a>
@@ -148,14 +148,14 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <?php
-                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_code']);
+                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
                     if(count($jobs)>0){
                         foreach($jobs as $item){
                         ?>
                         <!-- Post -->
                             <div class="post clearfix">
                                 <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                    <img class="img-circle img-bordered-sm" src="<?=base_url();?>design/dist/img/user1-128x128.jpg" alt="user image">
                                     <span class="username">
                                     <a href="#"><?=$item['job_title'];?></a>
                                     <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -183,7 +183,7 @@
                   <div class="tab-pane" id="timeline">
                     <!-- The timeline -->
                     <?php
-                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_code']);
+                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
                     if(count($jobs)>0){
                         foreach($jobs as $item){
                             if($item['status']=='pending'){
@@ -191,7 +191,7 @@
                         <!-- Post -->
                         <div class="post clearfix">
                                 <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                    <img class="img-circle img-bordered-sm" src="<?=base_url();?>design/dist/img/user1-128x128.jpg" alt="user image">
                                     <span class="username">
                                     <a href="#"><?=$item['job_title'];?></a>
                                     <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -220,7 +220,7 @@
 
                   <div class="tab-pane" id="settings">
                   <?php
-                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_code']);
+                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
                     if(count($jobs)>0){
                         foreach($jobs as $item){
                             if($item['status']=='confirmed'){
@@ -228,7 +228,7 @@
                         <!-- Post -->
                         <div class="post clearfix">
                                 <div class="user-block">
-                                    <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                                    <img class="img-circle img-bordered-sm" src="<?=base_url();?>design/dist/img/user1-128x128.jpg" alt="user image">
                                     <span class="username">
                                     <a href="#"><?=$item['job_title'];?></a>
                                     <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>

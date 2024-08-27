@@ -355,13 +355,44 @@
                 redirect(base_url()."user_signin");
             }
             $description=$this->input->post('description');
-            $data['jobs'] = $this->Job_model->view_all_jobs();;
+            $data['jobs'] = $this->Job_model->view_all_jobs();
             $this->load->view('templates/header');
             $this->load->view('templates/user/navbar');
             $this->load->view('templates/user/sidebar');
             $this->load->view('pages/'.$page,$data);  
             $this->load->view('templates/user/modal',$data);          
             $this->load->view('templates/user/footer');
+        }
+
+        public function apply_job($id){
+            $page = "apply_job";
+            if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
+                show_404();
+            }
+            if($this->session->user_login){
+
+            }else{
+                redirect(base_url()."user_signin");
+            }            
+            $data['id'] = $id;
+            $this->load->view('templates/header');
+            $this->load->view('templates/user/navbar');
+            $this->load->view('templates/user/sidebar');
+            $this->load->view('pages/'.$page,$data);  
+            $this->load->view('templates/user/modal',$data);          
+            $this->load->view('templates/user/footer');
+        }
+        public function save_application(){
+            $id=$this->input->post('job_id');
+            $save=$this->Job_model->save_application();
+            echo "<script>";
+            if($save){
+                echo "alert('Application successfully submitted!');";
+            }else{
+                echo "alert('Unable to submit application!');";
+            }
+            echo "window.location='".base_url()."apply_job/$id';";
+            echo "</script>";
         }
         //=====================User Module============================
     }
