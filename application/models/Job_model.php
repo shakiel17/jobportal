@@ -102,7 +102,7 @@
         }
         public function getAllApplicantByEmployer(){
             $username=$this->session->username;
-            $result=$this->db->query("SELECT ja.* FROM job_application ja INNER JOIN jobs j ON j.id=ja.job_id INNER JOIN employer e ON e.id=j.comp_id WHERE e.username='$username' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC");
+            $result=$this->db->query("SELECT ja.*,j.job_title FROM job_application ja INNER JOIN jobs j ON j.id=ja.job_id INNER JOIN employer e ON e.id=j.comp_id WHERE e.username='$username' GROUP BY ja.app_code,ja.job_id ORDER BY ja.datearray DESC");
             return $result->result_array();
         }
         public function getCompanyDetails($username){
@@ -243,6 +243,10 @@
             }else{
                 return false;
             }
+        }     
+        public function getResume($id){
+            $result=$this->db->query("SELECT * FROM job_application WHERE id='$id'");
+            return $result->row_array();
         }
     }
 ?>

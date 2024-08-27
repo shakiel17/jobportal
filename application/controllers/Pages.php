@@ -227,6 +227,40 @@
             }
             redirect(base_url()."manage_job");
         }
+        public function manage_applicant(){
+            $page = "manage_applicant";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
+            $data['title']="Applicant Manager";
+            $data['applicants'] = $this->Job_model->getAllApplicantByEmployer();            
+            $this->load->view('templates/header');
+            $this->load->view('templates/company/navbar');
+            $this->load->view('templates/company/sidebar');
+            $this->load->view('pages/company/'.$page,$data);
+            $this->load->view('templates/company/modal');
+            $this->load->view('templates/company/footer');
+        }
+        public function view_resume($id){
+            $page = "view_resume";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login){                
+                $data['doc'] = $this->Job_model->getResume($id);
+                $this->load->view('pages/company/'.$page,$data);
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
+
+        }
         //=====================Company Module=========================
 
         //=====================User Module============================
