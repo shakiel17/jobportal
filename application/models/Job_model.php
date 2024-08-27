@@ -220,7 +220,7 @@
             return $result->result_array();
         }
         public function fetchAllJobs($description){
-            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id WHERE j.job_keyword LIKE '%$description%' OR j.job_title LIKE '%$description%' ORDER BY j.datearray DESC");
+            $result=$this->db->query("SELECT j.*,e.comp_name,e.comp_address,e.comp_email,e.comp_contactno FROM jobs j INNER JOIN employer e ON e.id=j.comp_id WHERE (j.job_keyword LIKE '%$description%' OR j.job_title LIKE '%$description%') AND j.job_status='Posted' ORDER BY j.datearray DESC");
             return $result->result_array();
         }
         public function view_all_jobs(){
