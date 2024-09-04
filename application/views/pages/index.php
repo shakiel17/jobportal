@@ -1,8 +1,8 @@
-<div class="content-wrapper">
+<div class="content-wrapper" style="background: url(<?=base_url();?>design/dist/img/kidapawan.jpg) no-repeat; background-size: cover;">
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <h2 class="text-center display-4">Find REAL, ONLINE Job.</h2>            
+            <h2 class="text-center display-4"><b>Find REAL, ONLINE Job.</b></h2>            
             <?=form_open(base_url()."search_jobs");?>                
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
@@ -47,7 +47,7 @@
                             </div>
                             <br>
                             <center>
-                                <a href="<?=base_url();?>view_all_jobs" style="color:black;text-decoration:underline;">Browse all Jobs</a>
+                                <a href="<?=base_url();?>view_all_jobs" style="color:white;text-decoration:underline;" class="btn btn-primary btn-sm">Browse all Jobs</a>
                             </center>
                             
                         </div>

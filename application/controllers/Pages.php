@@ -108,6 +108,36 @@
             }
             redirect(base_url()."manage_company");
         }
+        public function manage_users(){
+            $page = "manage_user";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."admin");
+            }
+            $data['title']="User Manager";
+            $data['company']=$this->Job_model->getAllUsers();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+
+        public function update_user_status($code,$status){
+            $save=$this->Job_model->update_user_status($code,$status);
+            if($save){
+                $this->session->set_flashdata('success','User status successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update user status!');
+            }
+            redirect(base_url()."manage_users");
+        }
         //======================Admin Module==========================
 
         //=====================Company Module=========================
@@ -369,6 +399,8 @@
             }else{
                 redirect(base_url()."user_signin");
             }
+            
+            $data['user_status'] = $this->Job_model->checkStatus($this->session->username);
             $description=$this->input->post('description');
             $data['jobs'] = $this->Job_model->fetchAllJobs($description);
             $this->load->view('templates/header');
@@ -388,6 +420,7 @@
             }else{
                 redirect(base_url()."user_signin");
             }
+            $data['user_status'] = $this->Job_model->checkStatus($this->session->username);
             $description=$this->input->post('description');
             $data['jobs'] = $this->Job_model->view_all_jobs();
             $this->load->view('templates/header');

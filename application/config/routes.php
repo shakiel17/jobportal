@@ -77,6 +77,8 @@ $route['company_main'] = 'pages/company_main';
 $route['save_company_account'] = 'pages/save_company_account';
 //====================Company routes====================
 //====================Admin routes=======================
+$route['update_user_status/(:any)/(:any)'] = 'pages/update_user_status/$1/$2';
+$route['manage_users'] = 'pages/manage_users';
 $route['delete_company/(:any)'] = 'pages/delete_company/$1';
 $route['save_company'] = 'pages/save_company';
 $route['manage_company'] = 'pages/manage_company';

@@ -70,6 +70,10 @@
                             <input type="text" class="form-control" name="contactno">
                         </div>
                         <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
                             <label>Username</label>
                             <input type="text" class="form-control" name="username" required>
                         </div>

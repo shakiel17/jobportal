@@ -15,7 +15,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+  
     <!-- Main content -->
     <section class="content">
 
@@ -48,7 +48,15 @@
           <br>
           <b>Description:</b><br>
           <p style="font-size:20px;"><pre><?=$item['job_description'];?></pre></p><br>
-          <a href="<?=base_url();?>apply_job/<?=$item['id'];?>" class="btn btn-info">Apply Now</a>
+          <?php
+          if($user_status['status']=="pending"){
+            echo "<font color='red'>Your  account is not confirmed!</font>";
+          }else{
+            ?>
+            <a href="<?=base_url();?>apply_job/<?=$item['id'];?>" class="btn btn-info" <?=$view;?>>Apply Now</a>
+            <?php
+          }
+            ?>          
         </div>
         <!-- /.card-body -->
         <div class="card-footer">

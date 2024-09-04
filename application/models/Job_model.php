@@ -160,6 +160,7 @@
             $firstname=$this->input->post('firstname');
             $middlename=$this->input->post('middlename');
             $contactno=$this->input->post('contactno');
+            $email=$this->input->post('email');
             $username=$this->input->post('username');
             $password=$this->input->post('password');
             $code=date('YmdHis');
@@ -167,7 +168,7 @@
             if($check->num_rows()>0){
                 return false;
             }else{
-                $result=$this->db->query("INSERT INTO applicant(app_code,app_lastname,app_firstname,app_middlename,app_contactno,app_username,app_password) VALUES('$code','$lastname','$firstname','$middlename','$contactno','$username','$password')");
+                $result=$this->db->query("INSERT INTO applicant(app_code,app_lastname,app_firstname,app_middlename,app_contactno,app_username,app_password,app_email) VALUES('$code','$lastname','$firstname','$middlename','$contactno','$username','$password','$email')");
             }
             if($result){
                 $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username' AND app_password='$password'");
@@ -246,6 +247,18 @@
         }     
         public function getResume($id){
             $result=$this->db->query("SELECT * FROM job_application WHERE id='$id'");
+            return $result->row_array();
+        }
+        public function update_user_status($code,$status){
+            $result=$this->db->query("UPDATE applicant SET `status`='$status' WHERE app_code='$code'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        public function checkStatus($username){
+            $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username'");
             return $result->row_array();
         }
     }
