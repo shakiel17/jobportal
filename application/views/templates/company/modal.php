@@ -56,3 +56,40 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+      <div class="modal fade" id="ConfirmApplicant">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirm Applicant</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <?=form_open(base_url()."send_email");?>
+            <input type="hidden" name="job_id" id="jobid">
+            <input type="hidden" name="email" id="job_email">            
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control" required>
+                  <option value="">Select Status</option>
+                  <option value="accepted">Accept</option>
+                  <option value="declined">Decline</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Remarks</label>
+                <textarea name="remarks" class="form-control" rows="5"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+            <?=form_close();?>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div> 

@@ -98,6 +98,18 @@
     document.getElementById('job_keyword').value = id[3];    
     document.getElementById('job_comp_id').value = id[4];
   });
+  $('.acceptApplicant').click(function(){
+    var data=$(this).data('id');
+    var id=data.split('_');
+    document.getElementById('jobid').value = id[0];
+    document.getElementById('job_email').value = id[1];          
+  });
+  $('.declineApplicant').click(function(){
+    var data=$(this).data('id');
+    var id=data.split('_');
+    document.getElementById('jobid').value = id[0];
+    document.getElementById('job_email').value = id[1];          
+  });
 </script>
 </body>
 </html>

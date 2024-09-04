@@ -53,7 +53,8 @@
                     <th>Cover Letter</th>
                     <th>Resume</th>
                     <th>Date/Time Applied</th>
-                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -61,6 +62,11 @@
                     $x=1;
                     foreach($applicants as $item){  
                         $profile=$this->Job_model->getProfile($item['app_code']);
+                        if($item['status']=="pending"){
+                          $view="";
+                        }else{
+                          $view="style='display:none;'";
+                        }
                         echo "<tr>";
                             echo "<td>$x.</td>";
                             echo "<td>$item[job_title]</td>";
@@ -68,9 +74,11 @@
                             echo "<td>".nl2br($item['coverletter'])."</td>";
                             echo "<td><a href='".base_url()."view_resume/$item[id]' class='btn btn-warning' target='_blank'>View Resume</a></td>";
                             echo "<td>".date('m/d/Y',strtotime($item['datearray']))." / ".date('h:i A',strtotime($item['timearray']))."</td>";
+                            echo "<td>$item[status]</td>";
                             echo "<td>";
                             ?>
-                                
+                            <?=nl2br($item['remarks']);?>
+                            <a href="#" class="btn btn-primary btn-sm acceptApplicant" data-toggle="modal" data-target="#ConfirmApplicant" data-id="<?=$item['id'];?>_<?=$profile['app_email'];?>" <?=$view;?>>Update Status</a>                            
                                 <?php
                             echo "</td>";
                         echo "</tr>";
@@ -86,7 +94,8 @@
                     <th>Keywords</th>
                     <th>Status</th>
                     <th>Date/Time Posted</th>
-                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
                   </tr>
                   </tfoot>
                 </table>

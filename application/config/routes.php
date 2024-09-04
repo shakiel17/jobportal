@@ -65,6 +65,7 @@ $route['user_authentication'] = 'pages/user_authentication';
 $route['user_signin'] = 'pages/user_signin';
 //====================User routes=======================
 //====================Company routes====================
+$route['send_email'] = 'pages/send_email';
 $route['view_resume/(:any)'] = 'pages/view_resume/$1';
 $route['manage_applicant'] = 'pages/manage_applicant';
 $route['delete_job/(:any)'] = 'pages/delete_job/$1';

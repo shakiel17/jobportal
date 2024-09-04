@@ -83,6 +83,7 @@ CREATE TABLE `job_application` (
   `datearray` date DEFAULT NULL,
   `timearray` time DEFAULT NULL,
   `status` varchar(100) DEFAULT 'pending',
+  `remarks` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 

@@ -261,5 +261,15 @@
             $result=$this->db->query("SELECT * FROM applicant WHERE app_username='$username'");
             return $result->row_array();
         }
+
+        public function updateApplicationStatus($id,$status,$message){
+            $result=$this->db->query("UPDATE job_application SET `status`='$status',remarks='$message' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
     }
 ?>

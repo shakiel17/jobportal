@@ -291,6 +291,44 @@
             }
 
         }
+        public function send_email(){            
+            $email = $this->input->post('email');                        
+            $job_id = $this->input->post('job_id');
+            $status = $this->input->post('status');
+            $message = $this->input->post('remarks');
+            if($status=="accepted"){
+                $subject = 'Application Accepted!';
+            }else{
+                $subject = 'Application Declined!';
+            }            
+
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'awiitgkmnyqyqzkg',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('easykill.aboy@gmail.com');
+            $this->email->to($email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+            // $this->email->send();
+            // $this->email->print_debugger();
+            if($this->email->send()){
+                $this->Job_model->updateApplicationStatus($job_id,$status,$message);                
+                $this->session->set_flashdata("success","Application status successfully updated!");
+            }else{
+                $this->session->set_flashdata("failed","Unable to update application status!");
+            }
+            redirect(base_url()."manage_applicant");
+
+        }
         //=====================Company Module=========================
 
         //=====================User Module============================

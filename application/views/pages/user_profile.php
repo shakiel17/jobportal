@@ -142,6 +142,7 @@
                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Applied Job Offering</a></li>
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Pending Application</a></li>
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Confirmed Application</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#declined" data-toggle="tab">Declined Application</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -151,6 +152,15 @@
                     $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
                     if(count($jobs)>0){
                         foreach($jobs as $item){
+                          if($item['status']=="pending"){
+                            $color="black";
+                          }
+                          if($item['status']=="accepted"){
+                            $color="green";
+                          }
+                          if($item['status']=="declined"){
+                            $color="red";
+                          }
                         ?>
                         <!-- Post -->
                             <div class="post clearfix">
@@ -170,6 +180,9 @@
                             <p>
                                 <a href="" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Date/Time Applied: <?=date('m/d/Y',strtotime($item['datearray']));?> <?=date('h:i A',strtotime($item['timearray']));?></a>
                             </p>                            
+                            <p>
+                                <a href="#declined" class="link-black text-sm mr-2" data-toggle="tab"><i class="fas fa-info mr-1"></i> Status: <b style="font-size:20px;color:<?=$color;?>;"><?=$item['status'];?></b></a>
+                            </p>
                         </div>
                         <!-- /.post -->
                         <?php
@@ -224,6 +237,42 @@
                     if(count($jobs)>0){
                         foreach($jobs as $item){
                             if($item['status']=='confirmed'){
+                        ?>
+                        <!-- Post -->
+                        <div class="post clearfix">
+                                <div class="user-block">
+                                    <img class="img-circle img-bordered-sm" src="<?=base_url();?>design/dist/img/user1-128x128.jpg" alt="user image">
+                                    <span class="username">
+                                    <a href="#"><?=$item['job_title'];?></a>
+                                    <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                                    </span>
+                                    <span class="description"><?=$item['comp_name'];?><br><?=$item['comp_address'];?></span>
+                                </div>  
+                            <!-- /.user-block -->
+                            <p>
+                                <?=$item['job_description'];?>
+                            </p>
+
+                            <p>
+                                <a href="" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Date/Time Applied: <?=date('m/d/Y',strtotime($item['datearray']));?> <?=date('h:i A',strtotime($item['timearray']));?></a>
+                            </p>                            
+                        </div>
+                        <!-- /.post -->
+                        <?php
+                            }
+                        }
+                    }else{
+                        echo "No job applied.";
+                    }
+                    ?>
+                  </div>
+
+                  <div class="tab-pane" id="declined">
+                  <?php
+                    $jobs=$this->Job_model->getAllJobsByApplicant($profile['app_username']);
+                    if(count($jobs)>0){
+                        foreach($jobs as $item){
+                            if($item['status']=='declined'){
                         ?>
                         <!-- Post -->
                         <div class="post clearfix">
