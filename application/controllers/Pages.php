@@ -8,12 +8,12 @@
             if(!file_exists(APPPATH.'views/pages/'.$page.".php")){
                 show_404();
             }            
-            $this->load->view('templates/header');
-            $this->load->view('templates/user/navbar');
-            $this->load->view('templates/user/sidebar');
+            // $this->load->view('templates/header');
+            // $this->load->view('templates/user/navbar');
+            // $this->load->view('templates/user/sidebar');
             $this->load->view('pages/'.$page);  
-            $this->load->view('templates/user/modal');          
-            $this->load->view('templates/user/footer');
+            // $this->load->view('templates/user/modal');          
+            // $this->load->view('templates/user/footer');
         }
                 
         //======================Admin Module==========================
