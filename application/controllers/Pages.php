@@ -307,14 +307,14 @@
                 'smtp_host' => 'ssl://smtp.googlemail.com',
                 'smtp_port' => 465,
                 'smtp_user' => 'easykill.aboy@gmail.com',
-                'smtp_pass' => 'awiitgkmnyqyqzkg',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
                 'mailtype' => 'text',
                 'charset' => 'iso-8859-1',
                 'wordwrap' => TRUE
             );
             $this->load->library('email',$config);
             $this->email->set_newline("\r\n");
-            $this->email->from('easykill.aboy@gmail.com');
+            $this->email->from('Online Job Portal');
             $this->email->to($email);
             $this->email->subject($subject);
             $this->email->message($message);
