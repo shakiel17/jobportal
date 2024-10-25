@@ -300,8 +300,8 @@
                 $subject = 'Application Accepted!';
             }else{
                 $subject = 'Application Declined!';
-            }            
-
+            }      
+            
             $config = array(
                 'protocol' => 'smtp',
                 'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -312,6 +312,7 @@
                 'charset' => 'iso-8859-1',
                 'wordwrap' => TRUE
             );
+
             $this->load->library('email',$config);
             $this->email->set_newline("\r\n");
             $this->email->from('Online Job Portal');
