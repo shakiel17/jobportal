@@ -250,7 +250,9 @@
             return $result->row_array();
         }
         public function update_user_status($code,$status){
-            $result=$this->db->query("UPDATE applicant SET `status`='$status' WHERE app_code='$code'");
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $result=$this->db->query("UPDATE applicant SET `status`='$status',datearray='$date',timearray='$time' WHERE app_code='$code'");
             if($result){
                 return true;
             }else{

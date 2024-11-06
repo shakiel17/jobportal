@@ -53,7 +53,7 @@
             echo "<font color='red'>Your  account is not confirmed!</font>";
           }else{
             ?>
-            <a href="<?=base_url();?>apply_job/<?=$item['id'];?>" class="btn btn-info" <?=$view;?>>Apply Now</a>
+            <a href="<?=base_url();?>apply_job/<?=$item['id'];?>" class="btn btn-info">Apply Now</a>
             <?php
           }
             ?>          
