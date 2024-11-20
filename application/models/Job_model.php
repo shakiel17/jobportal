@@ -56,6 +56,14 @@
                 return false;
             }
         }
+	public function confirm_company($id){
+            $result=$this->db->query("UPDATE employer SET `status`='confirmed' WHERE id='$id'");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
         public function save_company_account(){
             $id=$this->input->post('company');
             $email=$this->input->post('email');
@@ -272,6 +280,71 @@
                 return false;
             }
 
+        }
+	public function getAllDocuments($username){
+		$result=$this->db->query("SELECT * FROM documents WHERE username='$username'");
+		return $result->result_array();
+	}
+	public function save_document(){
+		$username=$this->input->post("username");
+		$description=$this->input->post("description");
+		$file_name=$_FILES['file']['name'];
+		$file_tmp=$_FILES['file']['tmp_name'];
+            	$pdf_blob=addslashes(file_get_contents($file_tmp));
+		$date=date('Y-m-d');
+		$time=date('H:i:s');
+		$result=$this->db->query("INSERT INTO documents(username,`description`,document,datearray,timearray) VALUES('$username','$description','$pdf_blob','$date','$time')");
+		if($result){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function delete_document($id){
+		if($this->session->user_login){
+			$result=$this->db->query("DELETE FROM user_documents WHERE id='$id'");
+		}else{
+			$result=$this->db->query("DELETE FROM documents WHERE id='$id'");
+		}
+
+		if($result){
+			return true;
+		}else{
+			return false;
+		}
+	}
+		 public function getDocument($id){
+            $result=$this->db->query("SELECT * FROM documents WHERE id='$id'");
+            return $result->row_array();
+        }
+	public function getSingleJob($id){
+		$result=$this->db->query("SELECT * FROM jobs WHERE id='$id'");
+		return $result->row_array();
+	}
+	public function getApplicationDetails($id){
+		$result=$this->db->query("SELECT a.app_email,e.comp_email FROM job_application ja INNER JOIN applicant a ON a.app_username=ja.app_code INNER JOIN jobs j ON j.id=ja.job_id INNER JOIN employer e ON e.id=j.comp_id WHERE ja.id='$id'");
+		return $result->row_array();
+	}
+	public function upload_document(){
+            $username=$this->input->post('username');
+            $description=$this->input->post('description');
+            $file_name=$_FILES['file']['name'];
+		    $file_tmp=$_FILES['file']['tmp_name'];
+            $pdf_blob=addslashes(file_get_contents($file_tmp));
+            $username=$this->session->username;            
+            $date=date('Y-m-d');
+            $time=date('H:i:s');
+            $result=$this->db->query("INSERT INTO user_documents(username,description,document,datearray,timearray) VALUES('$username','$description','$pdf_blob','$date','$time')");
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+	 public function getUserDocument($id){
+            $result=$this->db->query("SELECT * FROM user_documents WHERE id='$id'");
+            return $result->row_array();
         }
     }
 ?>

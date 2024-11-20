@@ -132,6 +132,43 @@
               </div>
               <!-- /.card-body -->
             </div>
+           <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <table width="100%" border="0">
+                    <tr>
+                        <td><h3 class="card-title">Uploaded Documents</h3></td>
+                        <td align="right"><a href="#" data-toggle="modal" data-target="#AddDocument" title="Upload Document"><i class="fas fa-plus"></i></a></td>
+                    </tr>
+                </table>                
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+		<?php
+		$query=$this->Job_model->db->query("SELECT * FROM user_documents WHERE username='$profile[app_username]'");
+		if($query->num_rows() > 0){
+		$items=$query->result_array();
+		foreach($items as $item){
+		?>
+                <strong><i class="fas fa-file mr-1"></i> <?=$item['description'];?>
+		<div style="float:right;"><a href="<?=base_url();?>view_document/<?=$item['id'];?>" target="_blank">View</a> | <a href="<?=base_url();?>delete_document/<?=$item['id'];?>" onclick="return confirm('Do you wisht to delete this docoument?');return false;">Delete</a></div>
+		</strong>
+
+                <p class="text-muted">
+			<small><?=date('m/d/Y',strtotime($item['datearray']));?> <?=date('h:i A',strtotime($item['timearray']));?></small>
+                </p>
+
+                <hr>
+		<?php
+		  }
+		}else{
+			echo "No record found!";
+		}
+		?>
+                
+              </div>
+              <!-- /.card-body -->
+            </div>
             <!-- /.card -->
           </div>
           <!-- /.col -->
@@ -432,6 +469,38 @@
               <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" value="<?=$profile['app_password'];?>" required>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+          <?=form_close();?>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+<div class="modal fade" id="AddDocument">
+        <div class="modal-dialog modal-md">
+            <?=form_open(base_url()."upload_document");?>
+            <input type="hidden" name="username" value="<?=$profile['app_username'];?>">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Upload Document</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>            
+            <div class="modal-body">              
+              <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" name="description" required>
+              </div>
+              <div class="form-group">
+                <label>Document</label>
+                <input type="file" class="form-control" name="file" accept="application/pdf" required>
               </div>
             </div>
             <div class="modal-footer justify-content-between">

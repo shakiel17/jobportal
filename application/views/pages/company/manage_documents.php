@@ -35,9 +35,9 @@
               <div class="card-header">
                 <table border="0" width="100%">
                     <tr>
-                        <td><h3 class="card-title">List of Applicant</h3></td>
+                        <td><h3 class="card-title">List of Documents</h3></td>
                         <td align="right">
-                            
+                            <a href="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AddDocument">Add New</a>
                         </td>
                     </tr>
                 </table>                
@@ -48,39 +48,26 @@
                   <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Job Applied</th>
-                    <th>Applicant Name</th>
-                    <th>Cover Letter</th>
-                    <th>Resume</th>
-                    <th>Date/Time Applied</th>
-                    <th>Status</th>
-                    <th>Remarks</th>
+                    <th>Description</th>
+                    <th>Date/Time Added</th>
+                    <th>Attachment</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
                     $x=1;
-                    foreach($applicants as $item){  
-                        $profile=$this->Job_model->getProfile($item['app_code']);
-                        if($item['status']=="accepted"){
-                          $view="";
-                        }else{
-                          $view="style='display:none;'";
-                        }
+                    foreach($documents as $item){  
+                        
                         echo "<tr>";
                             echo "<td>$x.</td>";
-                            echo "<td>$item[job_title]</td>";
-                            echo "<td>$profile[app_lastname], $profile[app_firstname] $profile[app_middlename]</td>";
-                            echo "<td>".nl2br($item['coverletter'])."</td>";
-                            echo "<td><a href='".base_url()."view_resume/$item[id]' class='btn btn-warning' target='_blank'>View Resume</a></td>";
-                            echo "<td>".date('m/d/Y',strtotime($item['datearray']))." / ".date('h:i A',strtotime($item['timearray']))."</td>";
-                            echo "<td>$item[status]</td>";
+                            echo "<td>$item[description]</td>";                            
+			    echo "<td>".date('m/d/Y',strtotime($item['datearray']))." / ".date('h:i A',strtotime($item['timearray']))."</td>";
+                            echo "<td><a href='".base_url()."view_document/$item[id]' class='btn btn-warning' target='_blank'>View Document</a></td>";
                             echo "<td>";
                             ?>
-                            <?
-//nl2br($item['remarks']);
-?>
-                            <a href="#" class="btn btn-primary btn-sm acceptApplicant" data-toggle="modal" data-target="#ConfirmApplicant" data-id="<?=$item['id'];?>_<?=$profile['app_email'];?>" <?=$view;?>>Notify</a>                            
+
+                            <a href="<?=base_url();?>delete_document/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this document?');return false;">Delete</a>                            
                                 <?php
                             echo "</td>";
                         echo "</tr>";
@@ -91,13 +78,10 @@
                   <tfoot>
                   <tr>
                     <th>No.</th>
-                    <th>Job Title</th>
-                    <th>Job Description</th>
-                    <th>Keywords</th>
-                    <th>Status</th>
-                    <th>Date/Time Posted</th>
-                    <th>Status</th>
-                    <th>Remarks</th>
+                    <th>Description</th>
+                    <th>Date/Time Added</th>
+                    <th>Attachment</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>

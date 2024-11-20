@@ -45,6 +45,14 @@
                 Applicants                
               </p>
             </a>
+          </li>
+	  <li class="nav-item">
+            <a href="<?=base_url();?>manage_documents" class="nav-link">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Documents                
+              </p>
+            </a>
           </li>         
         </ul>
       </nav>

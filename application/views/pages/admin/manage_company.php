@@ -52,6 +52,7 @@
                     <th>Address</th>
                     <th>Email</th>
                     <th>Contact No.</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -59,16 +60,24 @@
                     <?php
                     $x=1;
                     foreach($company as $item){
+			$stat="style='display:none;'";
+			if($item['status']=="pending"){
+			$stat="";
+			}
                         echo "<tr>";
                             echo "<td>$x.</td>";
                             echo "<td>$item[comp_name]</td>";
                             echo "<td>$item[comp_address]</td>";
                             echo "<td>$item[comp_email]</td>";
                             echo "<td>$item[comp_contactno]</td>";
+                            echo "<td>$item[status]</td>";
                             echo "<td>";
                             ?>
+				<a href="<?=base_url();?>confirm_employer/<?=$item['id'];?>" class="btn btn-info btn-sm" onclick="return confirm('Do you wish to confirm this employer?');return false;" <?=$stat;?>>Confirm</a>
                                 <a href='#' class='btn btn-warning btn-sm editCompany' data-toggle='modal' data-target='#ManageCompany' data-id='<?=$item['id'];?>_<?=$item['comp_name'];?>_<?=$item['comp_address'];?>_<?=$item['comp_email'];?>_<?=$item['comp_contactno'];?>'>Edit</a>
                                 <a href="<?=base_url();?>delete_company/<?=$item['id'];?>" class="btn btn-danger btn-sm" onclick="return confirm('Do you wish to delete this record?');return false;">Delete</a>
+				<a href="<?=base_url();?>view_company_documents/<?=$item['username'];?>" class="btn btn-success btn-sm"> View Documents</a>
+				
                                 <?php
                             echo "</td>";
                         echo "</tr>";

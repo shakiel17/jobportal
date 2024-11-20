@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 //====================User routes=======================
+$route['upload_document'] = 'pages/upload_document';
+$route['confirm_employer/(:any)'] = 'pages/confirm_employer/$1';
 $route['save_application'] = 'pages/save_application';
 $route['apply_job/(:any)'] = 'pages/apply_job/$1';
 $route['view_all_jobs'] = 'pages/view_all_jobs';
@@ -65,6 +67,10 @@ $route['user_authentication'] = 'pages/user_authentication';
 $route['user_signin'] = 'pages/user_signin';
 //====================User routes=======================
 //====================Company routes====================
+$route['view_document/(:any)'] = 'pages/view_document/$1';
+$route['delete_document/(:any)'] = 'pages/delete_document/$1';
+$route['save_document'] = 'pages/save_document';
+$route['manage_documents'] = 'pages/manage_documents';
 $route['send_email'] = 'pages/send_email';
 $route['view_resume/(:any)'] = 'pages/view_resume/$1';
 $route['manage_applicant'] = 'pages/manage_applicant';
@@ -78,6 +84,9 @@ $route['company_main'] = 'pages/company_main';
 $route['save_company_account'] = 'pages/save_company_account';
 //====================Company routes====================
 //====================Admin routes=======================
+$route['admin_notify/(:any)'] = 'pages/admin_notify/$1';
+$route['manage_user_application'] = 'pages/manage_user_application';
+$route['view_company_documents/(:any)'] = 'pages/view_company_documents/$1';
 $route['update_user_status/(:any)/(:any)'] = 'pages/update_user_status/$1/$2';
 $route['manage_users'] = 'pages/manage_users';
 $route['delete_company/(:any)'] = 'pages/delete_company/$1';

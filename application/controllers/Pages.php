@@ -138,6 +138,100 @@
             }
             redirect(base_url()."manage_users");
         }
+	public function view_company_documents($username){
+            $page = "manage_documents";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."admin");
+            }
+		$data['comp'] = $this->Job_model->getCompanyDetails($username);
+            $data['title']="Document Manager";
+            $data['documents']=$this->Job_model->getAllDocuments($username);
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+	public function manage_user_application(){
+            $page = "manage_applicant";
+            if(!file_exists(APPPATH.'views/pages/admin/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->admin_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."admin");
+            }
+            $data['title']="User Manager";
+            $data['applicants']=$this->Job_model->getAllApplicant();
+            $this->load->view('templates/header');
+            $this->load->view('templates/admin/navbar');
+            $this->load->view('templates/admin/sidebar');
+            $this->load->view('pages/admin/'.$page,$data);
+            $this->load->view('templates/admin/modal');
+            $this->load->view('templates/admin/footer');
+        }
+	public function admin_notify($id){            
+            $details=$this->Job_model->getApplicationDetails($id);
+		$app_email=$details['app_email'];
+		$comp_email=$details['comp_email'];
+		$app_message = "Your application has been accepted by the administrator.";
+		$comp_message = "Application has been accepted by the administrator.";
+
+		$subject="Application Accepted";
+            
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'ssl://smtp.googlemail.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'easykill.aboy@gmail.com',
+                'smtp_pass' => 'ngfpdqyrfvoffhur',
+                'mailtype' => 'text',
+                'charset' => 'iso-8859-1',
+                'wordwrap' => TRUE
+            );
+
+            $this->load->library('email',$config);
+            $this->email->set_newline("\r\n");
+            $this->email->from('Online Job Portal');
+            $this->email->to($app_email);
+            $this->email->subject($subject);
+            $this->email->message($app_message);
+            // $this->email->send();
+            // $this->email->print_debugger();
+            if($this->email->send()){
+		      $this->load->library('email',$config);
+		    $this->email->set_newline("\r\n");
+		    $this->email->from('Online Job Portal');
+		    $this->email->to($comp_email);
+		    $this->email->subject($subject);
+		    $this->email->message($comp_message);
+			$this->email->send();
+                $this->Job_model->updateApplicationStatus($id,"accepted",$comp_message);                
+                $this->session->set_flashdata("success","Application status successfully updated!");
+            }else{
+                $this->session->set_flashdata("failed","Unable to update application status!");
+            }
+            redirect(base_url()."manage_user_application");
+
+        }
+	public function confirm_employer($id){
+            $save=$this->Job_model->confirm_company($id);
+            if($save){
+                $this->session->set_flashdata('success','Employer status successfully updated!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to update employer status!');
+            }
+            redirect(base_url()."manage_company");
+        }
         //======================Admin Module==========================
 
         //=====================Company Module=========================
@@ -282,7 +376,7 @@
             if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
                 show_404();
             }                        
-            if($this->session->company_login){                
+            if($this->session->company_login || $this->session->admin_login){                
                 $data['doc'] = $this->Job_model->getResume($id);
                 $this->load->view('pages/company/'.$page,$data);
             }else{
@@ -328,6 +422,66 @@
                 $this->session->set_flashdata("failed","Unable to update application status!");
             }
             redirect(base_url()."manage_applicant");
+
+        }
+	public function manage_documents(){
+            $page = "manage_documents";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login){
+                
+            }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
+	    $user=$this->session->username;
+            $data['title']="Document Manager";
+            $data['documents'] = $this->Job_model->getAllDocuments($user);
+            $this->load->view('templates/header');
+            $this->load->view('templates/company/navbar');
+            $this->load->view('templates/company/sidebar');
+            $this->load->view('pages/company/'.$page,$data);
+            $this->load->view('templates/company/modal');
+            $this->load->view('templates/company/footer');
+        }
+	public function save_document(){
+            $save=$this->Job_model->save_document();
+            if($save){
+                $this->session->set_flashdata("success","Document successfully uploaded!");
+            }else{
+                $this->session->set_flashdata("failed","Unable to upload document!");
+            }
+            redirect(base_url()."manage_documents");
+        }
+	public function delete_document($id){
+            $save=$this->Job_model->delete_document($id);
+            if($save){
+                $this->session->set_flashdata("success","Document successfully deleted!");
+            }else{
+                $this->session->set_flashdata("failed","Unable to delete document!");
+            }
+		if($this->session->user_login){
+	            redirect(base_url()."user_profile");
+		}else{
+	            redirect(base_url()."manage_documents");
+		}
+        }
+	public function view_document($id){
+            $page = "view_document";
+            if(!file_exists(APPPATH.'views/pages/company/'.$page.".php")){
+                show_404();
+            }                        
+            if($this->session->company_login || $this->session->admin_login){                
+                $data['doc'] = $this->Job_model->getDocument($id);
+                $this->load->view('pages/company/'.$page,$data);
+            }else if($this->session->user_login){
+		$data['doc'] = $this->Job_model->getUserDocument($id);
+                $this->load->view('pages/company/'.$page,$data);
+	    }else{
+                $this->session->set_flashdata('error','You are not logged in! Please enter password to login.');
+                redirect(base_url()."company");
+            }
 
         }
         //=====================Company Module=========================
@@ -499,6 +653,15 @@
             }
             echo "window.location='".base_url()."apply_job/$id';";
             echo "</script>";
+        }	
+	public function upload_document(){
+            $save=$this->Job_model->upload_document();
+            if($save){
+                $this->session->set_flashdata('success','User documents successfully uploaded!');
+            }else{
+                $this->session->set_flashdata('failed','Unable to upload user documents!');
+            }
+            redirect(base_url()."user_profile");
         }
         //=====================User Module============================
     }

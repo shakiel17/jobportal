@@ -45,6 +45,14 @@
                 Registered User                
               </p>
             </a>
+          </li>
+	<li class="nav-item">
+            <a href="<?=base_url();?>manage_user_application" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+		Application
+              </p>
+            </a>
           </li>         
         </ul>
       </nav>

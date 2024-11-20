@@ -62,25 +62,24 @@
                     $x=1;
                     foreach($applicants as $item){  
                         $profile=$this->Job_model->getProfile($item['app_code']);
-                        if($item['status']=="accepted"){
+                        if($item['status']=="pending"){
                           $view="";
                         }else{
                           $view="style='display:none;'";
                         }
+			$job=$this->Job_model->getSingleJob($item['job_id']);
                         echo "<tr>";
                             echo "<td>$x.</td>";
-                            echo "<td>$item[job_title]</td>";
+                            echo "<td>$job[job_title]</td>";
                             echo "<td>$profile[app_lastname], $profile[app_firstname] $profile[app_middlename]</td>";
                             echo "<td>".nl2br($item['coverletter'])."</td>";
-                            echo "<td><a href='".base_url()."view_resume/$item[id]' class='btn btn-warning' target='_blank'>View Resume</a></td>";
+                            echo "<td><a href='".base_url()."view_resume/$item[id]' class='btn btn-warning' target='_blank'>Resume</a></td>";
                             echo "<td>".date('m/d/Y',strtotime($item['datearray']))." / ".date('h:i A',strtotime($item['timearray']))."</td>";
                             echo "<td>$item[status]</td>";
                             echo "<td>";
                             ?>
-                            <?
-//nl2br($item['remarks']);
-?>
-                            <a href="#" class="btn btn-primary btn-sm acceptApplicant" data-toggle="modal" data-target="#ConfirmApplicant" data-id="<?=$item['id'];?>_<?=$profile['app_email'];?>" <?=$view;?>>Notify</a>                            
+                            <?=nl2br($item['remarks']);?>
+                            <a href="<?=base_url();?>admin_notify/<?=$item['id'];?>" class="btn btn-primary btn-sm" <?=$view;?> onclick="return confirm('Do you wish to accept this application?');return false;">Accept Application</a>                            
                                 <?php
                             echo "</td>";
                         echo "</tr>";
